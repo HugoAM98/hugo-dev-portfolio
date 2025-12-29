@@ -1,0 +1,110 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi,",
+    "name": "I'm Hugo",
+    "roles": {
+      "fullstack": "Full Stack Developer",
+      "frontend": "Frontend Specialist",
+      "backend": "Backend Engineer",
+      "problem": "Problem Solver"
+    },
+    "description": "Full Stack Developer with almost {years} years of experience. Working on the {ikea} project for Hong Kong, Indonesia and Taiwan.",
+    "years": "4",
+    "ikea": "IKEA e-commerce",
+    "viewProjects": "View Projects",
+    "contact": "Contact"
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Professional Experience",
+    "description": "Full Stack Developer with almost 4 years of experience. Specialized in backend (Laravel, PHP, TypeScript) and with experience in Vue.js, APIs and internationally recognized e-commerce projects.",
+    "experience": {
+      "bitbox": {
+        "company": "Bitbox S.L.",
+        "position": "Backend / Full Stack Developer",
+        "period": "2020 - 2025 (Current)",
+        "description": "Working on the IKEA e-commerce project for Hong Kong, Indonesia and Taiwan, developing and maintaining APIs that serve the web and mobile app. I implement new features and maintain systems in Laravel, PHP and TypeScript, in addition to developing Vue.js components optimized for performance and usability."
+      },
+      "mbc": {
+        "company": "MBC Soluciones",
+        "position": "Backend / Java Developer",
+        "period": "Internship contract - 3 months",
+        "description": "Java development of a telephone switchboard integrated with CRM, linking incoming calls with the customer database. Real-time ticket opening automation and creation of features to schedule appointments, register incidents and manage data from the switchboard itself. I also developed the company's current website."
+      }
+    },
+    "education": {
+      "title": "Education",
+      "daw": {
+        "title": "CFGS Web Application Development (DAW)",
+        "institution": "CIFP Villa de Agüimes - Canary Islands"
+      },
+      "dam": {
+        "title": "CFGS Multiplatform Application Development (DAM)",
+        "institution": "CIFP Villa de Agüimes - Canary Islands"
+      },
+      "bachillerato": {
+        "title": "Scientific-Technological Baccalaureate",
+        "institution": "IES José Arencibia Gil - Canary Islands"
+      }
+    }
+  },
+  "skills": {
+    "title": "Skills",
+    "subtitle": "Technologies I master",
+    "description": "A complete set of tools and technologies to create high-performance digital solutions.",
+    "categories": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "database": "Databases",
+      "analytics": "Analytics & Tools"
+    },
+    "languages": {
+      "title": "Languages",
+      "spanish": "Spanish",
+      "spanishLevel": "Native",
+      "english": "English",
+      "englishLevel": "Intermediate (communication)"
+    }
+  },
+  "projects": {
+    "title": "Portfolio",
+    "subtitle": "Featured Projects",
+    "description": "Some of my most outstanding work in ecommerce development",
+    "viewCode": "Code",
+    "viewDemo": "Demo"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Let's work together",
+    "description": "Do you have a project in mind? Let's talk and create something amazing!",
+    "connect": "Let's connect",
+    "connectDescription": "You can find me on these platforms, visit my",
+    "connectDescriptionLink": "portfolio",
+    "connectDescriptionEnd": "or send me a direct message.",
+    "portfolio": "portfolio",
+    "sendMessage": "Send me a message",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "your@email.com",
+    "messagePlaceholder": "Your message...",
+    "nameRequired": "Name is required",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Invalid email address",
+    "messageRequired": "Message is required",
+    "messageMinLength": "Message must be at least 10 characters",
+    "success": "Message sent successfully! I'll get back to you soon.",
+    "error": "Failed to send message. Please try again.",
+    "footer": "© {year} Hugo. Made with ❤️ and code."
+  }
+}

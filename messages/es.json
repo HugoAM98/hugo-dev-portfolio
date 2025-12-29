@@ -1,0 +1,110 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre mí",
+    "skills": "Habilidades",
+    "projects": "Proyectos",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "greeting": "Hola,",
+    "name": "soy Hugo",
+    "roles": {
+      "fullstack": "Full Stack Developer",
+      "frontend": "Frontend Specialist",
+      "backend": "Backend Engineer",
+      "problem": "Problem Solver"
+    },
+    "description": "Desarrollador Full Stack con casi {years} años de experiencia. Trabajando en el proyecto de {ikea} para Hong Kong, Indonesia y Taiwán.",
+    "years": "4",
+    "ikea": "IKEA e-commerce",
+    "viewProjects": "Ver Proyectos",
+    "contact": "Contactar"
+  },
+  "about": {
+    "title": "Sobre Mí",
+    "subtitle": "Experiencia Profesional",
+    "description": "Desarrollador Full Stack con casi 4 años de experiencia. Especializado en backend (Laravel, PHP, TypeScript) y con experiencia en Vue.js, APIs y proyectos de e-commerce con reconocimiento internacional.",
+    "experience": {
+      "bitbox": {
+        "company": "Bitbox S.L.",
+        "position": "Backend / Full Stack Developer",
+        "period": "2020 - 2025 (Actualidad)",
+        "description": "Trabajo en el proyecto de IKEA e-commerce para Hong Kong, Indonesia y Taiwán, desarrollando y manteniendo APIs que sirven a la web y a la app móvil. Implemento nuevas funcionalidades y mantengo sistemas en Laravel, PHP y TypeScript, además de desarrollar componentes Vue.js optimizados para rendimiento y usabilidad."
+      },
+      "mbc": {
+        "company": "MBC Soluciones",
+        "position": "Backend / Java Developer",
+        "period": "Contrato prácticas - 3 meses",
+        "description": "Desarrollo en Java de una centralita telefónica integrada con CRM, vinculando llamadas entrantes con la base de datos de clientes. Automatización de la apertura de fichas en tiempo real y creación de funcionalidades para agendar citas, registrar incidencias y gestionar datos desde la propia centralita. Además desarrollé la actual página web de la empresa."
+      }
+    },
+    "education": {
+      "title": "Formación",
+      "daw": {
+        "title": "CFGS Desarrollo de Aplicaciones Web (DAW)",
+        "institution": "CIFP Villa de Agüimes - Islas Canarias"
+      },
+      "dam": {
+        "title": "CFGS Desarrollo de Aplicaciones Multiplataforma (DAM)",
+        "institution": "CIFP Villa de Agüimes - Islas Canarias"
+      },
+      "bachillerato": {
+        "title": "Bachillerato Científico - Tecnológico",
+        "institution": "IES José Arencibia Gil - Islas Canarias"
+      }
+    }
+  },
+  "skills": {
+    "title": "Habilidades",
+    "subtitle": "Tecnologías que domino",
+    "description": "Un conjunto completo de herramientas y tecnologías para crear soluciones digitales de alto rendimiento.",
+    "categories": {
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "database": "Bases de Datos",
+      "analytics": "Analítica & Herramientas"
+    },
+    "languages": {
+      "title": "Idiomas",
+      "spanish": "Español",
+      "spanishLevel": "Nativo",
+      "english": "Inglés",
+      "englishLevel": "Intermedio (comunicación)"
+    }
+  },
+  "projects": {
+    "title": "Portfolio",
+    "subtitle": "Proyectos Destacados",
+    "description": "Algunos de mis trabajos más destacados en desarrollo ecommerce",
+    "viewCode": "Código",
+    "viewDemo": "Demo"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "Trabajemos juntos",
+    "description": "¿Tienes un proyecto en mente? ¡Hablemos y creemos algo increíble!",
+    "connect": "Conectemos",
+    "connectDescription": "Puedes encontrarme en estas plataformas, visitar mi",
+    "connectDescriptionLink": "portfolio",
+    "connectDescriptionEnd": "o enviarme un mensaje directo.",
+    "portfolio": "portfolio",
+    "sendMessage": "Envíame un mensaje",
+    "name": "Nombre",
+    "email": "Email",
+    "message": "Mensaje",
+    "send": "Enviar Mensaje",
+    "sending": "Enviando...",
+    "namePlaceholder": "Tu nombre",
+    "emailPlaceholder": "tu@email.com",
+    "messagePlaceholder": "Tu mensaje...",
+    "nameRequired": "El nombre es requerido",
+    "emailRequired": "El email es requerido",
+    "emailInvalid": "Email inválido",
+    "messageRequired": "El mensaje es requerido",
+    "messageMinLength": "El mensaje debe tener al menos 10 caracteres",
+    "success": "¡Mensaje enviado con éxito! Te responderé pronto.",
+    "error": "Error al enviar el mensaje. Por favor, inténtalo de nuevo.",
+    "footer": "© {year} Hugo. Hecho con ❤️ y código."
+  }
+}
