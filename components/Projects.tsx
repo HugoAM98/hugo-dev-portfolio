@@ -4,6 +4,20 @@ import { motion } from 'framer-motion'
 import { useInView } from 'react-intersection-observer'
 import { ExternalLink, Github } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { useState } from 'react'
+
+type ProjectCategory = 'all' | 'portfolio' | 'saas' | 'ecommerce' | 'mobile' | 'other'
+
+interface Project {
+  title: string
+  description: string
+  technologies: string[]
+  image: string
+  github: string
+  demo: string
+  color: string
+  category: ProjectCategory
+}
 
 /**
  * Portfolio Projects Data
@@ -12,7 +26,7 @@ import { useTranslations } from 'next-intl'
  * Include real project links, descriptions, and technologies used
  * This showcases your expertise and real-world experience
  */
-const projects = [
+const projects: Project[] = [
   {
     title: 'E-commerce Platform #1',
     description:
@@ -22,6 +36,7 @@ const projects = [
     github: 'https://github.com',
     demo: 'https://demo.com',
     color: 'from-blue-500 to-cyan-500',
+    category: 'ecommerce',
   },
   {
     title: 'E-commerce Platform #2',
@@ -32,6 +47,7 @@ const projects = [
     github: 'https://github.com',
     demo: 'https://demo.com',
     color: 'from-purple-500 to-pink-500',
+    category: 'ecommerce',
   },
   {
     title: 'E-commerce Platform #3',
@@ -42,45 +58,118 @@ const projects = [
     github: 'https://github.com',
     demo: 'https://demo.com',
     color: 'from-green-500 to-emerald-500',
+    category: 'ecommerce',
   },
   {
-    title: 'Dashboard Analytics',
+    title: 'Dashboard Analytics SaaS',
     description:
-      'Dashboard interactivo con visualización de datos en tiempo real y múltiples métricas empresariales.',
-    technologies: ['React', 'D3.js', 'Python', 'FastAPI'],
+      'Dashboard interactivo con visualización de datos en tiempo real y múltiples métricas empresariales. Plataforma SaaS completa con suscripciones.',
+    technologies: ['React', 'D3.js', 'Python', 'FastAPI', 'Stripe'],
     image: '📈',
     github: 'https://github.com',
     demo: 'https://demo.com',
     color: 'from-orange-500 to-red-500',
+    category: 'saas',
   },
   {
-    title: 'Plataforma de Aprendizaje',
+    title: 'CRM SaaS Platform',
     description:
-      'Sistema de gestión de aprendizaje online con cursos, certificados y seguimiento de progreso.',
-    technologies: ['Vue.js', 'Laravel', 'MySQL', 'AWS'],
-    image: '🎓',
+      'Sistema de gestión de relaciones con clientes completo. Incluye gestión de leads, pipeline de ventas, automatizaciones y reportes avanzados.',
+    technologies: ['Vue.js', 'Laravel', 'MySQL', 'AWS', 'WebSockets'],
+    image: '💼',
     github: 'https://github.com',
     demo: 'https://demo.com',
     color: 'from-indigo-500 to-purple-500',
+    category: 'saas',
+  },
+  {
+    title: 'Project Management SaaS',
+    description:
+      'Herramienta de gestión de proyectos con tableros Kanban, seguimiento de tiempo, colaboración en equipo y reportes detallados.',
+    technologies: ['React', 'Node.js', 'MongoDB', 'Socket.io', 'JWT'],
+    image: '📋',
+    github: 'https://github.com',
+    demo: 'https://demo.com',
+    color: 'from-cyan-500 to-blue-500',
+    category: 'saas',
+  },
+  {
+    title: 'Personal Portfolio Website',
+    description:
+      'Portfolio personal desarrollado con Next.js, diseño moderno y responsive. Incluye secciones de proyectos, habilidades y contacto.',
+    technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'],
+    image: '🎨',
+    github: 'https://github.com',
+    demo: 'https://demo.com',
+    color: 'from-pink-500 to-rose-500',
+    category: 'portfolio',
+  },
+  {
+    title: 'Developer Portfolio',
+    description:
+      'Sitio web portfolio para desarrollador con animaciones suaves, diseño minimalista y optimizado para SEO y rendimiento.',
+    technologies: ['React', 'Gatsby', 'GraphQL', 'Styled Components'],
+    image: '💻',
+    github: 'https://github.com',
+    demo: 'https://demo.com',
+    color: 'from-violet-500 to-purple-500',
+    category: 'portfolio',
   },
   {
     title: 'App Móvil Multiplataforma',
     description:
-      'Aplicación móvil desarrollada con React Native para iOS y Android con sincronización en tiempo real.',
+      'Aplicación móvil desarrollada con React Native para iOS y Android con sincronización en tiempo real y notificaciones push.',
     technologies: ['React Native', 'Firebase', 'TypeScript', 'Redux'],
     image: '📱',
     github: 'https://github.com',
     demo: 'https://demo.com',
     color: 'from-yellow-500 to-orange-500',
+    category: 'mobile',
+  },
+  {
+    title: 'Fitness Mobile App',
+    description:
+      'Aplicación móvil de fitness con seguimiento de ejercicios, rutinas personalizadas, progreso y integración con wearables.',
+    technologies: ['React Native', 'Node.js', 'MongoDB', 'Expo'],
+    image: '🏋️',
+    github: 'https://github.com',
+    demo: 'https://demo.com',
+    color: 'from-red-500 to-pink-500',
+    category: 'mobile',
+  },
+  {
+    title: 'Plataforma de Aprendizaje',
+    description:
+      'Sistema de gestión de aprendizaje online con cursos, certificados y seguimiento de progreso. Incluye video streaming y evaluaciones.',
+    technologies: ['Vue.js', 'Laravel', 'MySQL', 'AWS', 'FFmpeg'],
+    image: '🎓',
+    github: 'https://github.com',
+    demo: 'https://demo.com',
+    color: 'from-teal-500 to-cyan-500',
+    category: 'other',
   },
 ]
 
 export default function Projects() {
   const t = useTranslations('projects')
+  const [selectedCategory, setSelectedCategory] = useState<ProjectCategory>('all')
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
   })
+
+  const categories: { key: ProjectCategory; label: string }[] = [
+    { key: 'all', label: t('categories.all') },
+    { key: 'portfolio', label: t('categories.portfolio') },
+    { key: 'saas', label: t('categories.saas') },
+    { key: 'ecommerce', label: t('categories.ecommerce') },
+    { key: 'mobile', label: t('categories.mobile') },
+    { key: 'other', label: t('categories.other') },
+  ]
+
+  const filteredProjects = selectedCategory === 'all' 
+    ? projects 
+    : projects.filter(project => project.category === selectedCategory)
 
   return (
     <section
@@ -136,32 +225,56 @@ export default function Projects() {
           </div>
         </motion.div>
 
-        {/* Masonry-like Grid */}
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
-          {/* First Project - Large */}
-          {projects.slice(0, 1).map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="md:col-span-2 lg:col-span-1"
-            >
-              <ProjectCard project={project} index={index} inView={inView} t={t} />
-            </motion.div>
-          ))}
+        {/* Category Filter */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="mb-12"
+        >
+          <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+            {categories.map((category) => (
+              <motion.button
+                key={category.key}
+                onClick={() => setSelectedCategory(category.key)}
+                className={`px-6 py-3 rounded-lg font-semibold text-sm transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card ${
+                  selectedCategory === category.key
+                    ? 'bg-neon-gradient text-white shadow-neon-lg'
+                    : 'glass-strong text-gray-300 hover:text-white border-2 border-neon-purple/30 hover:border-neon-cyan/50'
+                }`}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label={`Filter by ${category.label}`}
+              >
+                {category.label}
+              </motion.button>
+            ))}
+          </div>
+        </motion.div>
 
-          {/* Rest of Projects */}
-          {projects.slice(1).map((project, index) => (
+        {/* Projects Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {filteredProjects.map((project, index) => (
             <ProjectCard
               key={project.title}
               project={project}
-              index={index + 1}
+              index={index}
               inView={inView}
               t={t}
             />
           ))}
         </div>
+
+        {/* Empty State */}
+        {filteredProjects.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={inView ? { opacity: 1 } : {}}
+            className="text-center py-20"
+          >
+            <p className="text-gray-400 text-lg">{t('noProjects')}</p>
+          </motion.div>
+        )}
       </div>
     </section>
   )
@@ -173,7 +286,7 @@ function ProjectCard({
   inView,
   t,
 }: {
-  project: typeof projects[0]
+  project: Project
   index: number
   inView: boolean
   t: any
@@ -183,7 +296,7 @@ function ProjectCard({
       initial={{ opacity: 0.3, y: 50 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ delay: index * 0.1, duration: 0.6 }}
-      className="project-card glass-strong rounded-xl p-6 border-2 border-neon-cyan/30 hover:border-neon-purple/50 transition-all relative overflow-hidden group"
+      className="project-card glass-strong rounded-xl p-6 border-2 border-neon-cyan/30 hover:border-neon-purple/50 transition-all relative overflow-hidden group h-full flex flex-col"
     >
       <div className="absolute inset-0 bg-neon-gradient opacity-5" />
       <div
@@ -206,12 +319,17 @@ function ProjectCard({
         </motion.span>
       </div>
 
-      <div className="p-6 relative z-10">
+      <div className="p-6 relative z-10 flex flex-col flex-grow">
+        <div className="mb-2">
+          <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-neon-purple/20 text-neon-purple border border-neon-purple/30">
+            {t(`categories.${project.category}`)}
+          </span>
+        </div>
         <h3 className="text-2xl font-bold mb-3 group-hover:text-neon-cyan transition-colors gradient-text">
           {project.title}
         </h3>
-        <p className="text-gray-300 mb-5 leading-relaxed">{project.description}</p>
-        <div className="flex flex-wrap gap-2">
+        <p className="text-gray-300 mb-5 leading-relaxed flex-grow">{project.description}</p>
+        <div className="flex flex-wrap gap-2 mb-5">
           {project.technologies.map((tech) => (
             <span
               key={tech}
@@ -222,12 +340,12 @@ function ProjectCard({
           ))}
         </div>
         {/* Optimized CTAs - More prominent and clear */}
-        <div className="flex gap-3 mt-6 pt-4 border-t border-neon-purple/20">
+        <div className="flex gap-3 mt-auto pt-4 border-t border-neon-purple/20">
           <motion.a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white bg-dark-card/60 hover:bg-dark-card border border-neon-purple/20 hover:border-neon-cyan/50 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white bg-dark-card/60 hover:bg-dark-card border border-neon-purple/20 hover:border-neon-cyan/50 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card flex-1 justify-center"
             whileHover={{ scale: 1.02, y: -1 }}
             whileTap={{ scale: 0.98 }}
             aria-label={`View ${project.title} source code on GitHub`}
@@ -239,7 +357,7 @@ function ProjectCard({
             href={project.demo}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-neon-gradient/80 hover:bg-neon-gradient border border-transparent rounded-lg shadow-neon hover:shadow-neon-lg transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-neon-gradient/80 hover:bg-neon-gradient border border-transparent rounded-lg shadow-neon hover:shadow-neon-lg transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card flex-1 justify-center"
             whileHover={{ scale: 1.02, y: -1 }}
             whileTap={{ scale: 0.98 }}
             aria-label={`View ${project.title} live demo`}

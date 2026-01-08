@@ -78,7 +78,16 @@
     "subtitle": "Proyectos Destacados",
     "description": "Algunos de mis trabajos más destacados en desarrollo ecommerce",
     "viewCode": "Código",
-    "viewDemo": "Demo"
+    "viewDemo": "Demo",
+    "noProjects": "No se encontraron proyectos en esta categoría",
+    "categories": {
+      "all": "Todos",
+      "portfolio": "Portfolio",
+      "saas": "SaaS",
+      "ecommerce": "E-commerce",
+      "mobile": "Móvil",
+      "other": "Otros"
+    }
   },
   "contact": {
     "title": "Contacto",

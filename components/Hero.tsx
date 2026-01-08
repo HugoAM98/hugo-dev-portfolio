@@ -1,9 +1,10 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowDown, Code, Sparkles } from 'lucide-react'
 import { useEffect, useState, useRef } from 'react'
 import { useTranslations } from 'next-intl'
+import Image from 'next/image'
 
 export default function Hero() {
   const t = useTranslations('hero')
@@ -16,6 +17,16 @@ export default function Hero() {
     t('roles.backend'),
     t('roles.problem'),
   ]
+
+  // Parallax scroll effect
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  })
+
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%'])
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0])
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8])
 
   // Rotate roles every 3 seconds for dynamic presentation
   useEffect(() => {
@@ -32,15 +43,6 @@ export default function Hero() {
       className="min-h-screen flex items-center justify-center relative overflow-hidden animated-gradient"
       aria-label="Hero section - Introduction"
     >
-      {/* Skip to content link - Made visible for accessibility */}
-      <a
-        href="#about"
-        className="skip-to-content"
-        aria-label="Skip to main content"
-      >
-        Skip to content
-      </a>
-
       {/* Optimized background elements - Reduced and more subtle */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -164,97 +166,117 @@ export default function Hero() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="relative h-[400px] lg:h-[500px] hidden lg:block"
+            className="relative h-[400px] lg:h-[500px] hidden lg:flex items-center justify-center"
             aria-hidden="true"
           >
-            {/* Floating Cards */}
+            {/* Parallax Image Container */}
             <motion.div
-              className="absolute top-0 right-0 glass-strong p-6 rounded-xl border-2 border-neon-cyan/30 w-48 shadow-neon-cyan"
-              animate={{
-                y: [0, -20, 0],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                repeatType: 'loop' as const,
-                times: [0, 0.5, 1],
-              }}
+              style={{ y, opacity, scale }}
+              className="relative w-full h-full flex items-center justify-center"
             >
-              <div className="text-4xl mb-2">💻</div>
-              <div className="text-sm text-gray-300">Laravel</div>
-              <div className="text-xs text-neon-cyan">Backend</div>
-            </motion.div>
+              {/* Glow effect behind image */}
+              <motion.div
+                className="absolute inset-0 bg-neon-gradient/30 rounded-full blur-3xl"
+                animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.6, 0.4] }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  repeatType: 'loop' as const,
+                }}
+              />
+              
+              {/* Image with parallax effect */}
+              <motion.div
+                className="relative z-10 w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-neon-cyan/40 shadow-neon-lg"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Gradient overlay for better integration */}
+                <div className="absolute inset-0 bg-gradient-to-br from-neon-cyan/20 via-transparent to-neon-purple/20 z-10 pointer-events-none" />
+                
+                <Image
+                  src="/profile.jpg"
+                  alt="Profile picture"
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width: 1024px) 256px, 320px"
+                />
+              </motion.div>
 
-            <motion.div
-              className="absolute top-32 left-0 glass-strong p-6 rounded-xl border-2 border-neon-purple/30 w-48 shadow-neon"
-              animate={{
-                y: [0, 20, 0],
-              }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: 0.5,
-                repeatType: 'loop' as const,
-                times: [0, 0.5, 1],
-              }}
-            >
-              <div className="text-4xl mb-2">⚡</div>
-              <div className="text-sm text-gray-300">Vue.js</div>
-              <div className="text-xs text-neon-purple">Frontend</div>
-            </motion.div>
+              {/* Floating decorative elements around image */}
+              <motion.div
+                className="absolute top-0 right-0 glass-strong p-4 rounded-xl border-2 border-neon-cyan/30 w-32 shadow-neon-cyan"
+                animate={{
+                  y: [0, -15, 0],
+                  rotate: [0, 5, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  repeatType: 'loop' as const,
+                }}
+              >
+                <div className="text-2xl mb-1">💻</div>
+                <div className="text-xs text-gray-300">Dev</div>
+              </motion.div>
 
-            <motion.div
-              className="absolute bottom-32 right-0 glass-strong p-6 rounded-xl border-2 border-neon-pink/30 w-48 shadow-neon-pink"
-              animate={{
-                y: [0, -15, 0],
-              }}
-              transition={{
-                duration: 4.5,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: 1,
-                repeatType: 'loop' as const,
-                times: [0, 0.5, 1],
-              }}
-            >
-              <div className="text-4xl mb-2">🚀</div>
-              <div className="text-sm text-gray-300">TypeScript</div>
-              <div className="text-xs text-neon-pink">Full Stack</div>
-            </motion.div>
+              <motion.div
+                className="absolute top-32 left-0 glass-strong p-4 rounded-xl border-2 border-neon-purple/30 w-32 shadow-neon"
+                animate={{
+                  y: [0, 15, 0],
+                  rotate: [0, -5, 0],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: 0.5,
+                  repeatType: 'loop' as const,
+                }}
+              >
+                <div className="text-2xl mb-1">⚡</div>
+                <div className="text-xs text-gray-300">Code</div>
+              </motion.div>
 
-            <motion.div
-              className="absolute bottom-0 left-1/4 glass-strong p-6 rounded-xl border-2 border-neon-cyan/30 w-48 shadow-neon-cyan"
-              animate={{
-                y: [0, 15, 0],
-              }}
-              transition={{
-                duration: 5.5,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: 1.5,
-                repeatType: 'loop' as const,
-                times: [0, 0.5, 1],
-              }}
-            >
-              <div className="text-4xl mb-2">📊</div>
-              <div className="text-sm text-gray-300">Analytics</div>
-              <div className="text-xs text-neon-cyan">Data</div>
-            </motion.div>
+              <motion.div
+                className="absolute bottom-32 right-0 glass-strong p-4 rounded-xl border-2 border-neon-pink/30 w-32 shadow-neon-pink"
+                animate={{
+                  y: [0, -12, 0],
+                  rotate: [0, 5, 0],
+                }}
+                transition={{
+                  duration: 4.5,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: 1,
+                  repeatType: 'loop' as const,
+                }}
+              >
+                <div className="text-2xl mb-1">🚀</div>
+                <div className="text-xs text-gray-300">Build</div>
+              </motion.div>
 
-            {/* Central Glow Effect */}
-            <motion.div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-neon-gradient/20 rounded-full blur-3xl"
-              animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                repeatType: 'loop' as const,
-                times: [0, 0.5, 1],
-              }}
-            />
+              <motion.div
+                className="absolute bottom-0 left-1/4 glass-strong p-4 rounded-xl border-2 border-neon-cyan/30 w-32 shadow-neon-cyan"
+                animate={{
+                  y: [0, 12, 0],
+                  rotate: [0, -5, 0],
+                }}
+                transition={{
+                  duration: 5.5,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: 1.5,
+                  repeatType: 'loop' as const,
+                }}
+              >
+                <div className="text-2xl mb-1">✨</div>
+                <div className="text-xs text-gray-300">Create</div>
+              </motion.div>
+            </motion.div>
           </motion.div>
         </div>
 

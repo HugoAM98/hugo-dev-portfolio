@@ -78,7 +78,16 @@
     "subtitle": "Featured Projects",
     "description": "Some of my most outstanding work in ecommerce development",
     "viewCode": "Code",
-    "viewDemo": "Demo"
+    "viewDemo": "Demo",
+    "noProjects": "No projects found in this category",
+    "categories": {
+      "all": "All",
+      "portfolio": "Portfolio",
+      "saas": "SaaS",
+      "ecommerce": "E-commerce",
+      "mobile": "Mobile",
+      "other": "Other"
+    }
   },
   "contact": {
     "title": "Contact",

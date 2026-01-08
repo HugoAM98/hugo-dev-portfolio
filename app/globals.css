@@ -25,28 +25,6 @@
   box-sizing: border-box;
 }
 
-/* Skip to content link for accessibility - Made visible on focus */
-.skip-to-content {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: var(--color-neon-purple);
-  color: white;
-  padding: 12px 24px;
-  text-decoration: none;
-  z-index: 9999;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  transition: top 0.2s ease;
-}
-
-.skip-to-content:focus {
-  top: 80px;
-  outline: 3px solid var(--color-neon-cyan);
-  outline-offset: 3px;
-}
-
 /* Enhanced focus visible styles for better accessibility (WCAG AA compliant) */
 *:focus-visible {
   outline: 3px solid var(--color-neon-cyan);
@@ -362,6 +340,32 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .shine {
     animation: none;
+  }
+}
+
+/* Parallax image styles */
+.parallax-image-container {
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.parallax-image-container img {
+  transition: transform 0.1s ease-out;
+}
+
+/* Enhanced shadow for profile image */
+.shadow-neon-lg {
+  box-shadow: 
+    0 0 30px rgba(6, 182, 212, 0.4),
+    0 0 60px rgba(168, 85, 247, 0.3),
+    0 0 90px rgba(236, 72, 153, 0.2),
+    inset 0 0 20px rgba(6, 182, 212, 0.1);
+}
+
+/* Smooth parallax transitions */
+@media (prefers-reduced-motion: reduce) {
+  .parallax-image-container {
+    transform: none !important;
   }
 }
 
