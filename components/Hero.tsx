@@ -80,48 +80,109 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[85vh] py-20">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[85vh] py-12 lg:py-20">
+          {/* Mobile: Image First - Original vertical layout */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: -30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="relative w-full flex justify-center lg:hidden mb-8"
+          >
+            {/* Mobile Image with unique effect */}
+            <motion.div
+              style={{ y, opacity, scale }}
+              className="relative w-48 h-48 flex items-center justify-center"
+            >
+              {/* Animated rings around image */}
+              <motion.div
+                className="absolute inset-0 rounded-full border-4 border-neon-cyan/30"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+              />
+              <motion.div
+                className="absolute inset-0 rounded-full border-2 border-neon-purple/30"
+                animate={{ rotate: -360 }}
+                transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+              />
+              
+              {/* Glow effect */}
+              <motion.div
+                className="absolute inset-0 bg-neon-gradient/40 rounded-full blur-2xl"
+                animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.6, 0.4] }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              />
+              
+              {/* Image */}
+              <motion.div
+                className="relative z-10 w-40 h-40 rounded-full overflow-hidden border-4 border-neon-cyan/50 shadow-neon-lg"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-neon-cyan/30 via-transparent to-neon-purple/30 z-10 pointer-events-none" />
+                <Image
+                  src="/profile.jpg"
+                  alt="Profile picture"
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="160px"
+                />
+              </motion.div>
+            </motion.div>
+          </motion.div>
+
           {/* Left Column - Text Content - Optimized for 5-second understanding */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="space-y-6 lg:space-y-8"
+            className="space-y-4 lg:space-y-8 text-center lg:text-left w-full"
           >
             {/* Simplified icon - Less distracting */}
             <motion.div
-              className="inline-block relative mb-4"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
+              className="inline-block relative mb-3 lg:mb-4"
+              initial={{ opacity: 0, scale: 0.8, rotate: -180 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
             >
               <Code 
-                className="w-16 h-16 lg:w-20 lg:h-20 text-neon-cyan relative z-10" 
+                className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 text-neon-cyan relative z-10" 
                 aria-hidden="true"
               />
             </motion.div>
 
             {/* Optimized typography hierarchy - Clear value proposition */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
-              <span className="gradient-text block mb-2">{t('greeting')}</span>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
               <motion.span
-                className="gradient-text block mb-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15, duration: 0.5 }}
+                className="gradient-text block mb-1 lg:mb-2"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1, duration: 0.6 }}
+              >
+                {t('greeting')}
+              </motion.span>
+              <motion.span
+                className="gradient-text block mb-3 lg:mb-4"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
               >
                 {t('name')}
               </motion.span>
             </h1>
 
             {/* Optimized role display - More compact */}
-            <div className="h-16 lg:h-20">
+            <div className="h-12 sm:h-16 lg:h-20">
               <AnimatedRole roles={roles} currentRole={currentRole} />
             </div>
 
             {/* Clear value proposition - Optimized description */}
             <motion.p
-              className="text-base sm:text-lg lg:text-xl text-gray-200 leading-relaxed max-w-2xl"
+              className="text-sm sm:text-base lg:text-xl text-gray-200 leading-relaxed max-w-2xl mx-auto lg:mx-0"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
@@ -132,18 +193,18 @@ export default function Hero() {
               })}
             </motion.p>
 
-            {/* Optimized CTAs - More prominent and clear */}
+            {/* Optimized CTAs - More prominent and clear - Mobile optimized */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 pt-2"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-2 justify-center lg:justify-start"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
             >
               <motion.a
                 href="#projects"
-                className="px-8 py-4 bg-neon-gradient rounded-lg font-semibold text-base lg:text-lg shadow-neon-lg relative overflow-hidden group text-center focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg transition-all"
+                className="px-6 py-3 sm:px-8 sm:py-4 bg-neon-gradient rounded-xl font-semibold text-sm sm:text-base lg:text-lg shadow-neon-lg relative overflow-hidden group text-center focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg transition-all"
                 whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: 0.95 }}
                 aria-label="View my projects"
               >
                 <span className="relative z-10">{t('viewProjects')}</span>
@@ -151,9 +212,9 @@ export default function Hero() {
               </motion.a>
               <motion.a
                 href="#contact"
-                className="px-8 py-4 glass-strong rounded-lg font-semibold text-base lg:text-lg border-2 border-neon-purple/40 hover:border-neon-cyan/70 hover:bg-neon-purple/10 transition-all relative overflow-hidden group text-center focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg"
+                className="px-6 py-3 sm:px-8 sm:py-4 glass-strong rounded-xl font-semibold text-sm sm:text-base lg:text-lg border-2 border-neon-purple/40 hover:border-neon-cyan/70 hover:bg-neon-purple/10 transition-all relative overflow-hidden group text-center focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg"
                 whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: 0.95 }}
                 aria-label="Contact me"
               >
                 <span className="relative z-10">{t('contact')}</span>
@@ -280,11 +341,11 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Optimized scroll indicator - More subtle */}
+        {/* Optimized scroll indicator - More subtle - Mobile enhanced */}
         <motion.a
           href="#about"
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg rounded-full p-2"
-          animate={{ y: [0, 10, 0] }}
+          className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg rounded-full p-2 glass-strong border border-neon-cyan/30"
+          animate={{ y: [0, 8, 0] }}
           transition={{
             duration: 2.5,
             repeat: Infinity,
@@ -296,7 +357,7 @@ export default function Hero() {
         >
           <motion.div
             animate={{
-              opacity: [0.4, 0.8, 0.4],
+              opacity: [0.5, 1, 0.5],
             }}
             transition={{
               duration: 2.5,
@@ -306,7 +367,7 @@ export default function Hero() {
               times: [0, 0.5, 1],
             }}
           >
-            <ArrowDown className="w-5 h-5 lg:w-6 lg:h-6 text-neon-cyan" aria-hidden="true" />
+            <ArrowDown className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-neon-cyan" aria-hidden="true" />
           </motion.div>
         </motion.a>
       </div>
@@ -331,8 +392,8 @@ function AnimatedRole({ roles, currentRole }: { roles: string[]; currentRole: nu
           aria-live="polite"
           aria-atomic="true"
         >
-          <span className="role-text text-xl sm:text-2xl lg:text-3xl font-bold gradient-text flex items-center gap-2">
-            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
+          <span className="role-text text-lg sm:text-xl lg:text-3xl font-bold gradient-text flex items-center justify-center lg:justify-start gap-2">
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" aria-hidden="true" />
             {role}
           </span>
         </motion.div>

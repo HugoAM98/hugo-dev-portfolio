@@ -175,30 +175,30 @@ export default function Projects() {
     <section
       id="projects"
       ref={ref}
-      className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-dark-card/30 relative overflow-hidden"
+      className="py-12 sm:py-16 lg:py-28 px-4 sm:px-6 lg:px-8 bg-dark-card/30 relative overflow-hidden"
       aria-labelledby="projects-heading"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
+        {/* Header Section - Mobile optimized */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="mb-16"
+          className="mb-8 sm:mb-12 lg:mb-16"
         >
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8">
-            <div>
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4 sm:gap-8">
+            <div className="text-center lg:text-left w-full lg:w-auto">
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={inView ? { opacity: 1 } : {}}
                 transition={{ delay: 0.2 }}
-                className="text-neon-cyan text-sm font-semibold uppercase tracking-wider"
+                className="text-neon-cyan text-xs sm:text-sm font-semibold uppercase tracking-wider"
               >
                 {t('title')}
               </motion.span>
               <h2 
                 id="projects-heading"
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4"
+                className="text-3xl sm:text-4xl lg:text-6xl font-bold mt-2 sm:mt-4"
               >
                 {(() => {
                   const subtitle = t('subtitle')
@@ -219,27 +219,28 @@ export default function Projects() {
                 })()}
               </h2>
             </div>
-            <p className="text-lg text-gray-300 max-w-md lg:text-right">
+            <p className="text-sm sm:text-base lg:text-lg text-gray-300 max-w-md mx-auto lg:mx-0 text-center lg:text-right">
               {t('description')}
             </p>
           </div>
         </motion.div>
 
-        {/* Category Filter */}
+        {/* Category Filter - Mobile horizontal scroll */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="mb-12"
+          className="mb-8 sm:mb-12"
         >
-          <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+          {/* Mobile: Horizontal scrollable */}
+          <div className="flex overflow-x-auto gap-2 sm:gap-3 pb-2 sm:pb-0 sm:flex-wrap sm:justify-center lg:justify-start hide-scrollbar scroll-smooth">
             {categories.map((category) => (
               <motion.button
                 key={category.key}
                 onClick={() => setSelectedCategory(category.key)}
-                className={`px-6 py-3 rounded-lg font-semibold text-sm transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card ${
+                className={`px-4 py-2 sm:px-6 sm:py-3 rounded-xl font-semibold text-xs sm:text-sm transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card whitespace-nowrap flex-shrink-0 ${
                   selectedCategory === category.key
-                    ? 'bg-neon-gradient text-white shadow-neon-lg'
+                    ? 'bg-neon-gradient text-white shadow-neon-lg scale-105'
                     : 'glass-strong text-gray-300 hover:text-white border-2 border-neon-purple/30 hover:border-neon-cyan/50'
                 }`}
                 whileHover={{ scale: 1.05, y: -2 }}
@@ -252,8 +253,8 @@ export default function Projects() {
           </div>
         </motion.div>
 
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        {/* Projects Grid - Mobile single column with better spacing */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {filteredProjects.map((project, index) => (
             <ProjectCard
               key={project.title}
@@ -293,59 +294,77 @@ function ProjectCard({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0.3, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
+      initial={{ opacity: 0.3, y: 50, scale: 0.9 }}
+      animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ delay: index * 0.1, duration: 0.6 }}
-      className="project-card glass-strong rounded-xl p-6 border-2 border-neon-cyan/30 hover:border-neon-purple/50 transition-all relative overflow-hidden group h-full flex flex-col"
+      className="project-card glass-strong rounded-2xl sm:rounded-xl p-4 sm:p-6 border-2 border-neon-cyan/30 hover:border-neon-purple/50 transition-all relative overflow-hidden group h-full flex flex-col"
+      whileHover={{ y: -4 }}
     >
       <div className="absolute inset-0 bg-neon-gradient opacity-5" />
-      <div
-        className={`relative z-10 flex items-center justify-center h-32 mb-6 text-6xl rounded-lg bg-gradient-to-br ${project.color} shadow-lg`}
-      >
-        <motion.span
-          animate={{
-            rotate: [0, 10, -10, 0],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            repeatDelay: 3,
-            ease: 'easeInOut',
-            repeatType: 'loop' as const,
-            times: [0, 0.33, 0.66, 1],
-          }}
+      
+      {/* Mobile: Compact header with image and category */}
+      <div className="relative z-10 flex items-start gap-4 mb-4 sm:mb-6">
+        <div
+          className={`flex items-center justify-center h-20 w-20 sm:h-32 sm:w-32 flex-shrink-0 text-4xl sm:text-6xl rounded-xl sm:rounded-lg bg-gradient-to-br ${project.color} shadow-lg`}
         >
-          {project.image}
-        </motion.span>
+          <motion.span
+            animate={{
+              rotate: [0, 10, -10, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatDelay: 3,
+              ease: 'easeInOut',
+              repeatType: 'loop' as const,
+              times: [0, 0.33, 0.66, 1],
+            }}
+          >
+            {project.image}
+          </motion.span>
+        </div>
+        
+        <div className="flex-1 min-w-0">
+          <div className="mb-2">
+            <span className="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-neon-purple/20 text-neon-purple border border-neon-purple/30">
+              {t(`categories.${project.category}`)}
+            </span>
+          </div>
+          <h3 className="text-xl sm:text-2xl font-bold mb-2 group-hover:text-neon-cyan transition-colors gradient-text line-clamp-2">
+            {project.title}
+          </h3>
+        </div>
       </div>
 
-      <div className="p-6 relative z-10 flex flex-col flex-grow">
-        <div className="mb-2">
-          <span className="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-neon-purple/20 text-neon-purple border border-neon-purple/30">
-            {t(`categories.${project.category}`)}
-          </span>
-        </div>
-        <h3 className="text-2xl font-bold mb-3 group-hover:text-neon-cyan transition-colors gradient-text">
-          {project.title}
-        </h3>
-        <p className="text-gray-300 mb-5 leading-relaxed flex-grow">{project.description}</p>
-        <div className="flex flex-wrap gap-2 mb-5">
-          {project.technologies.map((tech) => (
+      <div className="relative z-10 flex flex-col flex-grow px-0 sm:px-6">
+        <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-5 leading-relaxed flex-grow line-clamp-3 sm:line-clamp-none">
+          {project.description}
+        </p>
+        
+        {/* Technologies - Mobile optimized */}
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-5">
+          {project.technologies.slice(0, 4).map((tech) => (
             <span
               key={tech}
-              className="px-2 py-1 bg-dark-card/80 rounded text-xs text-gray-300 border border-neon-purple/20 hover:border-neon-cyan/50 transition-colors"
+              className="px-2 py-1 bg-dark-card/80 rounded-md text-xs text-gray-300 border border-neon-purple/20 hover:border-neon-cyan/50 transition-colors"
             >
               {tech}
             </span>
           ))}
+          {project.technologies.length > 4 && (
+            <span className="px-2 py-1 bg-dark-card/80 rounded-md text-xs text-gray-400 border border-neon-purple/20">
+              +{project.technologies.length - 4}
+            </span>
+          )}
         </div>
-        {/* Optimized CTAs - More prominent and clear */}
-        <div className="flex gap-3 mt-auto pt-4 border-t border-neon-purple/20">
+        
+        {/* Optimized CTAs - Mobile stacked */}
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-auto pt-3 sm:pt-4 border-t border-neon-purple/20">
           <motion.a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white bg-dark-card/60 hover:bg-dark-card border border-neon-purple/20 hover:border-neon-cyan/50 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card flex-1 justify-center"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 text-sm font-medium text-gray-300 hover:text-white bg-dark-card/60 hover:bg-dark-card border border-neon-purple/20 hover:border-neon-cyan/50 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card"
             whileHover={{ scale: 1.02, y: -1 }}
             whileTap={{ scale: 0.98 }}
             aria-label={`View ${project.title} source code on GitHub`}
@@ -357,7 +376,7 @@ function ProjectCard({
             href={project.demo}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-neon-gradient/80 hover:bg-neon-gradient border border-transparent rounded-lg shadow-neon hover:shadow-neon-lg transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card flex-1 justify-center"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 text-sm font-medium text-white bg-neon-gradient/80 hover:bg-neon-gradient border border-transparent rounded-lg shadow-neon hover:shadow-neon-lg transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card"
             whileHover={{ scale: 1.02, y: -1 }}
             whileTap={{ scale: 0.98 }}
             aria-label={`View ${project.title} live demo`}

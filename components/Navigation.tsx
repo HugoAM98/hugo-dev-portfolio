@@ -99,45 +99,77 @@ export default function Navigation() {
             <LanguageSwitcher />
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-white"
+          {/* Mobile Menu Button - Enhanced */}
+          <motion.button
+            className="md:hidden text-white relative z-50 p-2 rounded-lg glass-strong border border-neon-purple/30 hover:border-neon-cyan/50 transition-all"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            whileTap={{ scale: 0.9 }}
+            aria-label="Toggle mobile menu"
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+            <motion.div
+              animate={{ rotate: mobileMenuOpen ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </motion.div>
+          </motion.button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Enhanced with original design */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-strong border-t border-neon-purple/30"
-          >
-            <div className="px-4 pt-2 pb-4 space-y-1">
-              {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => {
-                    handleSmoothScroll(e, item.href)
-                    setMobileMenuOpen(false)
-                  }}
-                  className="block px-4 py-3 text-base font-medium text-gray-300 hover:text-neon-cyan hover:bg-neon-purple/10 transition-all rounded-lg focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-inset"
-                  aria-label={`Navigate to ${item.name} section`}
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+            />
+            
+            {/* Menu Panel */}
+            <motion.div
+              initial={{ opacity: 0, x: '100%' }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: '100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed top-16 right-0 bottom-0 w-80 max-w-[85vw] glass-strong border-l border-neon-purple/30 shadow-2xl z-50 md:hidden overflow-y-auto"
+            >
+              <div className="px-4 pt-6 pb-8 space-y-2">
+                {navItems.map((item, index) => (
+                  <motion.a
+                    key={item.name}
+                    href={item.href}
+                    onClick={(e) => {
+                      handleSmoothScroll(e, item.href)
+                      setMobileMenuOpen(false)
+                    }}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="block px-4 py-3.5 text-base font-medium text-gray-300 hover:text-neon-cyan hover:bg-neon-purple/10 transition-all rounded-xl border border-transparent hover:border-neon-cyan/30 focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-inset relative overflow-hidden group"
+                    aria-label={`Navigate to ${item.name} section`}
+                  >
+                    <span className="relative z-10 flex items-center gap-3">
+                      <span className="w-2 h-2 rounded-full bg-neon-cyan/0 group-hover:bg-neon-cyan transition-all" />
+                      {item.name}
+                    </span>
+                    <div className="absolute inset-0 bg-neon-gradient opacity-0 group-hover:opacity-5 transition-opacity" />
+                  </motion.a>
+                ))}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: navItems.length * 0.1 }}
+                  className="pt-4 mt-4 border-t border-neon-purple/20"
                 >
-                  {item.name}
-                </a>
-              ))}
-              <div className="pt-3 mt-2 border-t border-neon-purple/20">
-                <LanguageSwitcher />
+                  <LanguageSwitcher />
+                </motion.div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.nav>
