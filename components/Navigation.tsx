@@ -20,12 +20,39 @@ export default function Navigation() {
   ]
 
   useEffect(() => {
+    // Optimized scroll handler with throttling for better performance
+    let ticking = false
+    
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 50)
+          ticking = false
+        })
+        ticking = true
+      }
     }
-    window.addEventListener('scroll', handleScroll)
+    
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+  
+  // Smooth scroll handler
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    const element = document.querySelector(href)
+    if (element) {
+      const offset = 80 // Account for fixed navbar
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset
+      const offsetPosition = elementPosition - offset
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
+      setMobileMenuOpen(false)
+    }
+  }
 
   return (
     <motion.nav
@@ -33,9 +60,11 @@ export default function Navigation() {
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'glass-strong border-b border-neon-purple/30 shadow-neon'
+          ? 'glass-strong border-b border-neon-purple/20 shadow-lg backdrop-blur-xl'
           : 'bg-transparent'
       }`}
+      role="navigation"
+      aria-label="Main navigation"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
@@ -49,21 +78,22 @@ export default function Navigation() {
             Portfolio
           </motion.a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          {/* Desktop Navigation - Optimized with smooth scroll */}
+          <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item, index) => (
               <motion.a
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium hover:text-neon-cyan transition-colors relative group focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg rounded"
+                onClick={(e) => handleSmoothScroll(e, item.href)}
+                className="text-sm font-medium text-gray-300 hover:text-neon-cyan transition-colors relative group focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg rounded px-1 py-2"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ y: -2 }}
                 aria-label={`Navigate to ${item.name} section`}
               >
                 {item.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-neon-gradient group-hover:w-full transition-all duration-300" />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-neon-gradient group-hover:w-full transition-all duration-300 ease-out" />
               </motion.a>
             ))}
             <LanguageSwitcher />
@@ -88,18 +118,22 @@ export default function Navigation() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden glass-strong border-t border-neon-purple/30"
           >
-            <div className="px-4 pt-2 pb-4 space-y-2">
+            <div className="px-4 pt-2 pb-4 space-y-1">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="block px-3 py-2 text-base font-medium hover:text-neon-cyan transition-colors hover:bg-neon-purple/10 rounded-lg"
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    handleSmoothScroll(e, item.href)
+                    setMobileMenuOpen(false)
+                  }}
+                  className="block px-4 py-3 text-base font-medium text-gray-300 hover:text-neon-cyan hover:bg-neon-purple/10 transition-all rounded-lg focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-inset"
+                  aria-label={`Navigate to ${item.name} section`}
                 >
                   {item.name}
                 </a>
               ))}
-              <div className="pt-2 border-t border-neon-purple/30">
+              <div className="pt-3 mt-2 border-t border-neon-purple/20">
                 <LanguageSwitcher />
               </div>
             </div>

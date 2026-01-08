@@ -23,28 +23,33 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   
   return {
     metadataBase: new URL(baseUrl),
-    title: isSpanish
-      ? 'Hugo - Desarrollador Full Stack | Portfolio'
-      : 'Hugo - Full Stack Developer | Portfolio',
+    title: {
+      default: isSpanish
+        ? 'Hugo - Desarrollador Full Stack | Portfolio Profesional'
+        : 'Hugo - Full Stack Developer | Professional Portfolio',
+      template: isSpanish
+        ? '%s | Hugo - Desarrollador Full Stack'
+        : '%s | Hugo - Full Stack Developer',
+    },
     description: isSpanish
-      ? 'Portfolio de Hugo - Desarrollador Full Stack con más de 4 años de experiencia. Especializado en Laravel, Vue.js, TypeScript y desarrollo de plataformas ecommerce.'
-      : 'Hugo\'s Portfolio - Full Stack Developer with over 4 years of experience. Specialized in Laravel, Vue.js, TypeScript and ecommerce platform development.',
+      ? 'Desarrollador Full Stack con 4+ años de experiencia. Especializado en Laravel, Vue.js, TypeScript y ecommerce. Trabajando en proyectos internacionales como IKEA para Hong Kong, Indonesia y Taiwán.'
+      : 'Full Stack Developer with 4+ years of experience. Specialized in Laravel, Vue.js, TypeScript and ecommerce development. Working on international projects like IKEA for Hong Kong, Indonesia and Taiwan.',
     keywords: isSpanish
-      ? 'desarrollador full stack, Laravel, Vue.js, TypeScript, ecommerce, portfolio, desarrollo web, Hugo'
-      : 'full stack developer, Laravel, Vue.js, TypeScript, ecommerce, portfolio, web development, Hugo',
+      ? 'desarrollador full stack, Laravel, Vue.js, TypeScript, ecommerce, portfolio, desarrollo web, Hugo, IKEA, Hong Kong, Indonesia, Taiwán, APIs REST, PHP, desarrollo backend, frontend'
+      : 'full stack developer, Laravel, Vue.js, TypeScript, ecommerce, portfolio, web development, Hugo, IKEA, Hong Kong, Indonesia, Taiwan, REST APIs, PHP, backend development, frontend',
     authors: [{ name: 'Hugo', url: baseUrl }],
     creator: 'Hugo',
     publisher: 'Hugo',
     openGraph: {
       title: isSpanish
-        ? 'Hugo - Desarrollador Full Stack'
-        : 'Hugo - Full Stack Developer',
+        ? 'Hugo - Desarrollador Full Stack | Portfolio Profesional'
+        : 'Hugo - Full Stack Developer | Professional Portfolio',
       description: isSpanish
-        ? 'Portfolio de desarrollador Full Stack especializado en ecommerce'
-        : 'Full Stack Developer portfolio specialized in ecommerce',
+        ? 'Desarrollador Full Stack con 4+ años de experiencia especializado en Laravel, Vue.js, TypeScript y ecommerce. Trabajando en proyectos internacionales.'
+        : 'Full Stack Developer with 4+ years of experience specialized in Laravel, Vue.js, TypeScript and ecommerce. Working on international projects.',
       type: 'website',
-      locale: locale,
-      alternateLocale: locale === 'es' ? 'en' : 'es',
+      locale: locale === 'es' ? 'es_ES' : 'en_US',
+      alternateLocale: locale === 'es' ? ['en_US'] : ['es_ES'],
       url: `${baseUrl}/${locale}`,
       siteName: 'Hugo Portfolio',
       images: [
@@ -52,19 +57,21 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
           url: new URL('/opengraph-image', baseUrl).toString(),
           width: 1200,
           height: 630,
-          alt: isSpanish ? 'Hugo - Desarrollador Full Stack' : 'Hugo - Full Stack Developer',
+          alt: isSpanish ? 'Hugo - Desarrollador Full Stack especializado en ecommerce y desarrollo web' : 'Hugo - Full Stack Developer specialized in ecommerce and web development',
+          type: 'image/png',
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
       title: isSpanish
-        ? 'Hugo - Desarrollador Full Stack'
-        : 'Hugo - Full Stack Developer',
+        ? 'Hugo - Desarrollador Full Stack | Portfolio Profesional'
+        : 'Hugo - Full Stack Developer | Professional Portfolio',
       description: isSpanish
-        ? 'Portfolio de desarrollador Full Stack especializado en ecommerce'
-        : 'Full Stack Developer portfolio specialized in ecommerce',
+        ? 'Desarrollador Full Stack especializado en Laravel, Vue.js, TypeScript y ecommerce. 4+ años de experiencia en proyectos internacionales.'
+        : 'Full Stack Developer specialized in Laravel, Vue.js, TypeScript and ecommerce. 4+ years of experience in international projects.',
       images: [new URL('/opengraph-image', baseUrl).toString()],
+      creator: '@hugo', // Update with actual Twitter handle
     },
     alternates: {
       canonical: `${baseUrl}/${locale}`,
@@ -121,7 +128,7 @@ export default async function LocaleLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={`${inter.className} dark`}>
+      <body className={`${inter.variable} font-sans dark`}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

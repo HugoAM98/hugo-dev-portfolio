@@ -71,19 +71,27 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState<Partial<FormData>>({})
 
+  /**
+   * Validates contact form data
+   * Returns true if valid, false otherwise
+   * Sets error messages for invalid fields
+   */
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {}
 
+    // Name validation - Required field
     if (!formData.name.trim()) {
       newErrors.name = t('nameRequired')
     }
 
+    // Email validation - Required and must be valid format
     if (!formData.email.trim()) {
       newErrors.email = t('emailRequired')
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = t('emailInvalid')
     }
 
+    // Message validation - Required and minimum length
     if (!formData.message.trim()) {
       newErrors.message = t('messageRequired')
     } else if (formData.message.trim().length < 10) {
@@ -94,20 +102,31 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0
   }
 
+  /**
+   * Handles input changes and clears errors when user starts typing
+   * Provides immediate feedback for better UX
+   */
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
-    // Clear error when user starts typing
+    
+    // Clear error when user starts typing for immediate feedback
     if (errors[name as keyof FormData]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }))
     }
   }
 
+  /**
+   * Handles form submission
+   * Validates data, sends to API, and provides user feedback
+   * Includes error handling and loading states
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    // Validate form before submission
     if (!validateForm()) {
       toast.error(t('error'))
       return
@@ -128,6 +147,7 @@ export default function Contact() {
 
       if (data.success) {
         toast.success(t('success'))
+        // Reset form on successful submission
         setFormData({ name: '', email: '', message: '', honeypot: '' })
         setErrors({})
       } else {
@@ -169,16 +189,17 @@ export default function Contact() {
       <section
         id="contact"
         ref={ref}
-        className="py-32 px-4 sm:px-6 lg:px-8 bg-dark-bg/80 relative overflow-hidden"
+        className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-dark-bg/80 relative overflow-hidden"
+        aria-labelledby="contact-heading"
       >
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
+          transition={{ duration: 0.8 }}
+          className="text-center mb-12 lg:mb-16"
+        >
             <motion.span
               initial={{ opacity: 0 }}
               animate={inView ? { opacity: 1 } : {}}
@@ -187,7 +208,10 @@ export default function Contact() {
             >
               {t('title')}
             </motion.span>
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-6">
+            <h2 
+              id="contact-heading"
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-6"
+            >
               {(() => {
                 const subtitle = t('subtitle')
                 const words = subtitle.split(' ')
@@ -206,12 +230,12 @@ export default function Contact() {
                 )
               })()}
             </h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               {t('description')}
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-5 gap-8">
+          <div className="grid lg:grid-cols-5 gap-8 lg:gap-10">
             {/* Social Links (2 columns) */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
@@ -223,13 +247,14 @@ export default function Contact() {
                 <h3 className="text-2xl font-bold mb-4 gradient-text">
                   {t('connect')}
                 </h3>
-                <p className="text-gray-400 mb-6">
+                <p className="text-gray-300 mb-6 leading-relaxed">
                   {t('connectDescription')}{' '}
                   <a
                     href="https://hugoamdeveloper.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-neon-cyan hover:text-neon-pink transition-colors underline"
+                    className="text-neon-cyan hover:text-neon-pink transition-colors underline focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card rounded"
+                    aria-label="Visit portfolio website (opens in new tab)"
                   >
                     {t('connectDescriptionLink')}
                   </a>{' '}
@@ -300,7 +325,7 @@ export default function Contact() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 bg-dark-card/50 border rounded-lg focus:outline-none focus:ring-2 transition-all text-white placeholder-gray-500 ${
+                    className={`w-full px-4 py-3 bg-dark-card/60 border rounded-lg focus:outline-none focus:ring-2 transition-all text-white placeholder-gray-500 ${
                       errors.name
                         ? 'border-red-500 focus:ring-red-500/20'
                         : 'border-neon-purple/30 focus:border-neon-cyan focus:ring-neon-cyan/20'
@@ -334,7 +359,7 @@ export default function Contact() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 bg-dark-card/50 border rounded-lg focus:outline-none focus:ring-2 transition-all text-white placeholder-gray-500 ${
+                    className={`w-full px-4 py-3 bg-dark-card/60 border rounded-lg focus:outline-none focus:ring-2 transition-all text-white placeholder-gray-500 ${
                       errors.email
                         ? 'border-red-500 focus:ring-red-500/20'
                         : 'border-neon-purple/30 focus:border-neon-cyan focus:ring-neon-cyan/20'
@@ -368,7 +393,7 @@ export default function Contact() {
                     rows={5}
                     value={formData.message}
                     onChange={handleChange}
-                    className={`w-full px-4 py-3 bg-dark-card/50 border rounded-lg focus:outline-none focus:ring-2 transition-all resize-none text-white placeholder-gray-500 ${
+                    className={`w-full px-4 py-3 bg-dark-card/60 border rounded-lg focus:outline-none focus:ring-2 transition-all resize-none text-white placeholder-gray-500 ${
                       errors.message
                         ? 'border-red-500 focus:ring-red-500/20'
                         : 'border-neon-purple/30 focus:border-neon-cyan focus:ring-neon-cyan/20'
@@ -391,23 +416,25 @@ export default function Contact() {
                   )}
                 </div>
 
+                {/* Optimized CTA button - More prominent and clear */}
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full px-6 py-3 bg-neon-gradient rounded-lg font-semibold flex items-center justify-center gap-2 shadow-neon-lg hover:shadow-neon relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed"
-                  whileHover={!isSubmitting ? { scale: 1.02 } : undefined}
-                  whileTap={!isSubmitting ? { scale: 0.98 } : undefined}
+                  className="w-full px-8 py-4 bg-neon-gradient rounded-lg font-semibold text-base flex items-center justify-center gap-2 shadow-neon-lg hover:shadow-neon-xl relative overflow-hidden group disabled:opacity-60 disabled:cursor-not-allowed transition-all"
+                  whileHover={!isSubmitting ? { scale: 1.01, y: -1 } : undefined}
+                  whileTap={!isSubmitting ? { scale: 0.99 } : undefined}
                   aria-label="Send message"
+                  aria-busy={isSubmitting}
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
                         {t('sending')}
                       </>
                     ) : (
                       <>
-                        <Send className="w-5 h-5" />
+                        <Send className="w-5 h-5" aria-hidden="true" />
                         {t('send')}
                       </>
                     )}

@@ -1,19 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+/**
+ * Contact Form API Route
+ * 
+ * Handles contact form submissions with spam protection and validation
+ * 
+ * TODO: Integrate with email service (Resend, SendGrid, Nodemailer, etc.)
+ * Current implementation logs submissions - update with real email service
+ * 
+ * Security Features:
+ * - Honeypot field for spam protection
+ * - Server-side validation
+ * - Email format validation
+ */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { name, email, message, honeypot } = body
 
-    // Honeypot spam protection
+    // Honeypot spam protection - bots will fill this hidden field
     if (honeypot) {
+      // Silently accept spam submissions without processing
       return NextResponse.json(
         { success: true, message: 'Message sent successfully' },
         { status: 200 }
       )
     }
 
-    // Validation
+    // Server-side validation - Required fields
     if (!name || !email || !message) {
       return NextResponse.json(
         { success: false, message: 'All fields are required' },
@@ -21,7 +35,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Email validation
+    // Email format validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
       return NextResponse.json(
@@ -30,18 +44,37 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Here you would integrate with your email service
-    // For now, we'll just log it (you can use Resend, SendGrid, etc.)
+    // Log submission for development/testing
+    // TODO: Remove console.log in production
     console.log('Contact form submission:', { name, email, message })
 
-    // TODO: Integrate with email service (Resend, SendGrid, etc.)
-    // Example with Resend:
-    // await resend.emails.send({
-    //   from: 'Portfolio <onboarding@resend.dev>',
-    //   to: 'your-email@example.com',
-    //   subject: `New contact from ${name}`,
-    //   html: `<p>Name: ${name}</p><p>Email: ${email}</p><p>Message: ${message}</p>`,
-    // })
+    /**
+     * TODO: Integrate with email service
+     * 
+     * Recommended services:
+     * - Resend (https://resend.com) - Simple and modern
+     * - SendGrid (https://sendgrid.com) - Enterprise-grade
+     * - Nodemailer with SMTP - Self-hosted option
+     * 
+     * Example with Resend:
+     * 
+     * import { Resend } from 'resend'
+     * const resend = new Resend(process.env.RESEND_API_KEY)
+     * 
+     * await resend.emails.send({
+     *   from: 'Portfolio Contact <contact@yourdomain.com>',
+     *   to: 'your-email@example.com',
+     *   replyTo: email,
+     *   subject: `New contact from ${name}`,
+     *   html: `
+     *     <h2>New Contact Form Submission</h2>
+     *     <p><strong>Name:</strong> ${name}</p>
+     *     <p><strong>Email:</strong> ${email}</p>
+     *     <p><strong>Message:</strong></p>
+     *     <p>${message.replace(/\n/g, '<br>')}</p>
+     *   `,
+     * })
+     */
 
     return NextResponse.json(
       { success: true, message: 'Message sent successfully!' },

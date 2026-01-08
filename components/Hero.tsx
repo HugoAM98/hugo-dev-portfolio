@@ -17,6 +17,7 @@ export default function Hero() {
     t('roles.problem'),
   ]
 
+  // Rotate roles every 3 seconds for dynamic presentation
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentRole((prev) => (prev + 1) % roles.length)
@@ -29,30 +30,25 @@ export default function Hero() {
       ref={heroRef}
       id="hero"
       className="min-h-screen flex items-center justify-center relative overflow-hidden animated-gradient"
+      aria-label="Hero section - Introduction"
     >
-      {/* Animated background elements - Neon style */}
+      {/* Skip to content link - Made visible for accessibility */}
+      <a
+        href="#about"
+        className="skip-to-content"
+        aria-label="Skip to main content"
+      >
+        Skip to content
+      </a>
+
+      {/* Optimized background elements - Reduced and more subtle */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
-          className="hero-bg-blur absolute top-20 left-10 w-96 h-96 bg-neon-cyan/30 rounded-full blur-3xl"
+          className="hero-bg-blur absolute top-20 left-10 w-96 h-96 bg-neon-cyan/15 rounded-full blur-3xl"
           animate={{
-            x: [0, 150, 0],
-            y: [0, 100, 0],
-            scale: [1, 1.3, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            repeatType: 'loop' as const,
-            times: [0, 0.5, 1],
-          }}
-        />
-        <motion.div
-          className="hero-bg-blur absolute bottom-20 right-10 w-[500px] h-[500px] bg-neon-purple/30 rounded-full blur-3xl"
-          animate={{
-            x: [0, -150, 0],
-            y: [0, -100, 0],
-            scale: [1, 1.3, 1],
+            x: [0, 100, 0],
+            y: [0, 80, 0],
+            scale: [1, 1.2, 1],
           }}
           transition={{
             duration: 25,
@@ -61,72 +57,72 @@ export default function Hero() {
             repeatType: 'loop' as const,
             times: [0, 0.5, 1],
           }}
+          style={{ willChange: 'transform' }}
         />
         <motion.div
-          className="hero-bg-blur absolute top-1/2 left-1/2 w-80 h-80 bg-neon-pink/20 rounded-full blur-3xl transform -translate-x-1/2 -translate-y-1/2"
+          className="hero-bg-blur absolute bottom-20 right-10 w-[400px] h-[400px] bg-neon-purple/15 rounded-full blur-3xl"
           animate={{
-            scale: [1, 1.5, 1],
-            rotate: [0, 360, 0],
+            x: [0, -100, 0],
+            y: [0, -80, 0],
+            scale: [1, 1.2, 1],
           }}
           transition={{
             duration: 30,
             repeat: Infinity,
-            ease: 'linear',
+            ease: 'easeInOut',
             repeatType: 'loop' as const,
             times: [0, 0.5, 1],
           }}
+          style={{ willChange: 'transform' }}
         />
       </div>
 
-      <div className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
-          {/* Left Column - Text Content */}
+      <div className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center min-h-[85vh] py-20">
+          {/* Left Column - Text Content - Optimized for 5-second understanding */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="space-y-6 lg:space-y-8"
           >
+            {/* Simplified icon - Less distracting */}
             <motion.div
-              className="inline-block relative"
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              transition={{ duration: 0.3 }}
+              className="inline-block relative mb-4"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
             >
-              <motion.div
-                className="absolute inset-0 bg-neon-purple/50 blur-2xl rounded-full"
-                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0.8, 0.5] }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                  repeatType: 'loop' as const,
-                  times: [0, 0.5, 1],
-                }}
+              <Code 
+                className="w-16 h-16 lg:w-20 lg:h-20 text-neon-cyan relative z-10" 
+                aria-hidden="true"
               />
-              <Code className="w-20 h-20 text-neon-cyan relative z-10 drop-shadow-[0_0_20px_rgba(6,182,212,0.8)]" />
             </motion.div>
 
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight">
-              <span className="gradient-text block">{t('greeting')}</span>
+            {/* Optimized typography hierarchy - Clear value proposition */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight">
+              <span className="gradient-text block mb-2">{t('greeting')}</span>
               <motion.span
-                className="gradient-text block"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
+                className="gradient-text block mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.5 }}
               >
                 {t('name')}
               </motion.span>
             </h1>
 
-            <div className="h-20">
+            {/* Optimized role display - More compact */}
+            <div className="h-16 lg:h-20">
               <AnimatedRole roles={roles} currentRole={currentRole} />
             </div>
 
+            {/* Clear value proposition - Optimized description */}
             <motion.p
-              className="text-lg sm:text-xl text-gray-300 leading-relaxed max-w-xl"
+              className="text-base sm:text-lg lg:text-xl text-gray-200 leading-relaxed max-w-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
             >
               {t('description', {
                 years: t('years'),
@@ -134,38 +130,42 @@ export default function Hero() {
               })}
             </motion.p>
 
-            <div className="hero-buttons flex flex-col sm:flex-row gap-4 pt-4">
+            {/* Optimized CTAs - More prominent and clear */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 pt-2"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+            >
               <motion.a
                 href="#projects"
-                className="px-8 py-4 bg-neon-gradient rounded-lg font-semibold text-lg shadow-neon-lg relative overflow-hidden group text-center focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg"
-                whileHover={{ scale: 1.05, boxShadow: '0 0 40px rgba(168, 85, 247, 0.8)' }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="View projects section"
+                className="px-8 py-4 bg-neon-gradient rounded-lg font-semibold text-base lg:text-lg shadow-neon-lg relative overflow-hidden group text-center focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg transition-all"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                aria-label="View my projects"
               >
                 <span className="relative z-10">{t('viewProjects')}</span>
                 <div className="absolute inset-0 shine opacity-0 group-hover:opacity-100 transition-opacity" />
               </motion.a>
               <motion.a
                 href="#contact"
-                className="px-8 py-4 glass-strong rounded-lg font-semibold text-lg border-2 border-neon-purple/50 hover:border-neon-pink/70 hover:shadow-neon-pink transition-all relative overflow-hidden group text-center focus:outline-none focus:ring-2 focus:ring-neon-pink focus:ring-offset-2 focus:ring-offset-dark-bg"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="Go to contact section"
+                className="px-8 py-4 glass-strong rounded-lg font-semibold text-base lg:text-lg border-2 border-neon-purple/40 hover:border-neon-cyan/70 hover:bg-neon-purple/10 transition-all relative overflow-hidden group text-center focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                aria-label="Contact me"
               >
                 <span className="relative z-10">{t('contact')}</span>
-                <motion.div
-                  className="absolute inset-0 bg-neon-gradient opacity-0 group-hover:opacity-20 transition-opacity"
-                />
               </motion.a>
-            </div>
+            </motion.div>
           </motion.div>
 
-          {/* Right Column - Visual Elements */}
+          {/* Right Column - Visual Elements - Optimized for performance */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="relative h-[500px] lg:h-[600px] hidden lg:block"
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="relative h-[400px] lg:h-[500px] hidden lg:block"
+            aria-hidden="true"
           >
             {/* Floating Cards */}
             <motion.div
@@ -258,12 +258,13 @@ export default function Hero() {
           </motion.div>
         </div>
 
+        {/* Optimized scroll indicator - More subtle */}
         <motion.a
           href="#about"
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg rounded-full p-2"
-          animate={{ y: [0, 15, 0] }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-bg rounded-full p-2"
+          animate={{ y: [0, 10, 0] }}
           transition={{
-            duration: 2,
+            duration: 2.5,
             repeat: Infinity,
             ease: 'easeInOut',
             repeatType: 'loop' as const,
@@ -273,18 +274,17 @@ export default function Hero() {
         >
           <motion.div
             animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.5, 1, 0.5],
+              opacity: [0.4, 0.8, 0.4],
             }}
             transition={{
-              duration: 2,
+              duration: 2.5,
               repeat: Infinity,
               ease: 'easeInOut',
               repeatType: 'loop' as const,
               times: [0, 0.5, 1],
             }}
           >
-            <ArrowDown className="w-6 h-6 text-neon-cyan drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]" aria-hidden="true" />
+            <ArrowDown className="w-5 h-5 lg:w-6 lg:h-6 text-neon-cyan" aria-hidden="true" />
           </motion.div>
         </motion.a>
       </div>
@@ -292,22 +292,25 @@ export default function Hero() {
   )
 }
 
+// Optimized AnimatedRole component - Better performance and accessibility
 function AnimatedRole({ roles, currentRole }: { roles: string[]; currentRole: number }) {
   return (
-    <div className="relative">
+    <div className="relative h-full flex items-center">
       {roles.map((role, index) => (
         <motion.div
           key={role}
-          className="absolute left-1/2 transform -translate-x-1/2"
-          initial={{ opacity: 0, y: 20 }}
+          className="absolute left-0 w-full"
+          initial={{ opacity: 0, y: 15 }}
           animate={{
             opacity: currentRole === index ? 1 : 0,
-            y: currentRole === index ? 0 : -20,
+            y: currentRole === index ? 0 : -15,
           }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4, ease: 'easeOut' }}
+          aria-live="polite"
+          aria-atomic="true"
         >
-          <span className="role-text text-2xl sm:text-3xl md:text-4xl font-bold gradient-text flex items-center gap-2">
-            <Sparkles className="w-6 h-6 sm:w-8 sm:h-8" />
+          <span className="role-text text-xl sm:text-2xl lg:text-3xl font-bold gradient-text flex items-center gap-2">
+            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true" />
             {role}
           </span>
         </motion.div>

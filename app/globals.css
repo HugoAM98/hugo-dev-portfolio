@@ -6,6 +6,17 @@
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 8, 8, 16;
   --background-end-rgb: 4, 4, 12;
+  
+  /* Optimized color tokens for better contrast and accessibility */
+  --color-neon-cyan: #06b6d4;
+  --color-neon-purple: #a855f7;
+  --color-neon-pink: #ec4899;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #d1d5db;
+  --color-text-tertiary: #9ca3af;
+  --color-bg-primary: #080810;
+  --color-bg-secondary: #0f0f1a;
+  --color-bg-card: rgba(15, 15, 26, 0.8);
 }
 
 * {
@@ -14,69 +25,102 @@
   box-sizing: border-box;
 }
 
-/* Skip to content link for accessibility */
+/* Skip to content link for accessibility - Made visible on focus */
 .skip-to-content {
   position: absolute;
   top: -40px;
   left: 0;
-  background: #a855f7;
+  background: var(--color-neon-purple);
   color: white;
-  padding: 8px 16px;
+  padding: 12px 24px;
   text-decoration: none;
-  z-index: 100;
-  border-radius: 4px;
+  z-index: 9999;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: top 0.2s ease;
 }
 
 .skip-to-content:focus {
-  top: 0;
+  top: 80px;
+  outline: 3px solid var(--color-neon-cyan);
+  outline-offset: 3px;
 }
 
-/* Focus visible styles for better accessibility */
+/* Enhanced focus visible styles for better accessibility (WCAG AA compliant) */
 *:focus-visible {
-  outline: 2px solid #06b6d4;
-  outline-offset: 2px;
+  outline: 3px solid var(--color-neon-cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Remove outline on mouse click, keep for keyboard navigation */
+*:focus:not(:focus-visible) {
+  outline: none;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: #080810;
+  color: var(--color-text-primary);
+  background: var(--color-bg-primary);
   overflow-x: hidden;
+  /* Optimized font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
+/* Improved typography scale for better hierarchy */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Optimized heading styles */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  
+  /* Better text contrast and readability */
+  p {
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+  }
 }
 
-/* Custom scrollbar - Neon style */
+/* Optimized scrollbar - Cleaner and less distracting */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #080810;
+  background: var(--color-bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #a855f7, #ec4899, #06b6d4);
+  background: var(--color-neon-purple);
   border-radius: 10px;
-  border: 2px solid #080810;
+  border: 2px solid var(--color-bg-primary);
+  opacity: 0.6;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #c084fc, #f472b6, #22d3ee);
+  opacity: 0.9;
+  background: var(--color-neon-cyan);
 }
 
-/* Neon Gradient text */
+/* Optimized gradient text - Less distracting, better performance */
 .gradient-text {
-  background: linear-gradient(135deg, #06b6d4 0%, #a855f7 25%, #ec4899 50%, #f59e0b 75%, #06b6d4 100%);
+  background: linear-gradient(135deg, var(--color-neon-cyan) 0%, var(--color-neon-purple) 50%, var(--color-neon-pink) 100%);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: gradient-shift 5s ease infinite;
-  filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.5));
+  /* Reduced animation duration for less distraction */
+  animation: gradient-shift 8s ease infinite;
+  /* Reduced filter for better performance */
+  filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.3));
 }
 
 @keyframes gradient-shift {
@@ -88,27 +132,44 @@ body {
   }
 }
 
-/* Enhanced Glass morphism */
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .gradient-text {
+    animation: none;
+    background: linear-gradient(135deg, var(--color-neon-cyan) 0%, var(--color-neon-purple) 100%);
+  }
+}
+
+/* Optimized Glass morphism - Better performance and visual hierarchy */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(168, 85, 247, 0.1);
+  background: rgba(15, 15, 26, 0.6);
+  backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.3);
 }
 
 .glass-strong {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(30px) saturate(200%);
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  box-shadow: 0 8px 32px 0 rgba(168, 85, 247, 0.2),
-              inset 0 0 20px rgba(168, 85, 247, 0.05);
+  background: rgba(15, 15, 26, 0.85);
+  backdrop-filter: blur(20px) saturate(200%);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4),
+              inset 0 0 20px rgba(168, 85, 247, 0.03);
 }
 
-/* Animated gradient background - Neon style */
+/* Disable backdrop-filter on devices with poor performance */
+@media (prefers-reduced-motion: reduce) {
+  .glass,
+  .glass-strong {
+    backdrop-filter: none;
+    background: rgba(15, 15, 26, 0.95);
+  }
+}
+
+/* Optimized gradient background - Subtler and more professional */
 .animated-gradient {
-  background: linear-gradient(-45deg, #080810, #1a0a2e, #16213e, #0f3460);
+  background: linear-gradient(-45deg, var(--color-bg-primary), #0f0f1a, #141420, #0a0a12);
   background-size: 400% 400%;
-  animation: gradient 20s ease infinite;
+  animation: gradient 30s ease infinite;
   position: relative;
 }
 
@@ -120,10 +181,23 @@ body {
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
-  animation: pulse-glow 8s ease-in-out infinite;
+    radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+  animation: pulse-glow 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animated-gradient {
+    animation: none;
+    background: var(--color-bg-primary);
+  }
+  
+  .animated-gradient::before {
+    animation: none;
+  }
 }
 
 @keyframes gradient {
@@ -163,49 +237,54 @@ body {
     inset 0 0 10px rgba(168, 85, 247, 0.1);
 }
 
-/* Grid pattern overlay */
+/* Optimized grid pattern - Subtler and less distracting */
 .grid-pattern {
   background-image: 
-    linear-gradient(rgba(168, 85, 247, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px);
-  background-size: 50px 50px;
-  opacity: 0.3;
+    linear-gradient(rgba(168, 85, 247, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  opacity: 0.4;
 }
 
-/* Animated grid lines */
+/* Optimized animated grid - Slower and more subtle */
 @keyframes grid-move {
   0% {
     transform: translate(0, 0);
   }
   100% {
-    transform: translate(50px, 50px);
+    transform: translate(60px, 60px);
   }
 }
 
 .animated-grid {
   background-image: 
-    linear-gradient(rgba(168, 85, 247, 0.15) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(168, 85, 247, 0.15) 1px, transparent 1px);
-  background-size: 50px 50px;
-  animation: grid-move 20s linear infinite;
+    linear-gradient(rgba(168, 85, 247, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168, 85, 247, 0.08) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: grid-move 40s linear infinite;
+  opacity: 0.3;
 }
 
-/* Floating particles effect */
+/* Reduced particles count for better performance */
 .particles {
   position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
   pointer-events: none;
+  /* Will-change for better performance */
+  will-change: transform;
 }
 
 .particle {
   position: absolute;
-  width: 4px;
-  height: 4px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.8), transparent);
+  width: 3px;
+  height: 3px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.6), transparent);
   border-radius: 50%;
-  animation: float-particle 15s infinite;
+  animation: float-particle 20s infinite;
+  /* Optimize for GPU acceleration */
+  will-change: transform, opacity;
 }
 
 @keyframes float-particle {
@@ -214,14 +293,25 @@ body {
     opacity: 0;
   }
   10% {
-    opacity: 1;
+    opacity: 0.6;
   }
   90% {
-    opacity: 1;
+    opacity: 0.6;
   }
   100% {
     transform: translateY(-100vh) translateX(100px) scale(1);
     opacity: 0;
+  }
+}
+
+/* Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .animated-grid {
+    animation: none;
+  }
+  
+  .particles {
+    display: none;
   }
 }
 
@@ -248,7 +338,7 @@ body {
   animation: glitch 0.3s infinite;
 }
 
-/* Shine effect */
+/* Optimized shine effect - More subtle and performant */
 @keyframes shine {
   0% {
     background-position: -200% center;
@@ -262,10 +352,17 @@ body {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.1),
     transparent
   );
   background-size: 200% 100%;
-  animation: shine 3s infinite;
+  animation: shine 4s infinite;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .shine {
+    animation: none;
+  }
+}
+
 

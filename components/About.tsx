@@ -55,7 +55,8 @@ export default function About() {
     <section
       id="about"
       ref={ref}
-      className="py-32 px-4 sm:px-6 lg:px-8 bg-dark-card/30 relative overflow-hidden"
+      className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-dark-card/30 relative overflow-hidden"
+      aria-labelledby="about-heading"
     >
       <div className="max-w-7xl mx-auto">
         {/* Header */}
@@ -68,7 +69,10 @@ export default function About() {
           <span className="text-neon-cyan text-sm font-semibold uppercase tracking-wider">
             {t('title')}
           </span>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-6">
+          <h2 
+            id="about-heading"
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4 mb-6"
+          >
             {(() => {
               const subtitle = t('subtitle')
               const words = subtitle.split(' ')
@@ -87,13 +91,13 @@ export default function About() {
               )
             })()}
           </h2>
-          <p className="text-lg text-gray-400 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-lg text-gray-300 leading-relaxed max-w-3xl mx-auto">
             {t('description')}
           </p>
         </motion.div>
 
         {/* Experience Timeline */}
-        <div className="space-y-8 mb-20">
+        <div className="space-y-6 mb-16">
           {experience.map((exp, index) => {
             const Icon = exp.icon
             return (

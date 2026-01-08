@@ -5,7 +5,13 @@ import { useInView } from 'react-intersection-observer'
 import { ExternalLink, Github } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-// Puedes editar estos proyectos con tus propios proyectos
+/**
+ * Portfolio Projects Data
+ * 
+ * IMPORTANT: Update these projects with your actual work
+ * Include real project links, descriptions, and technologies used
+ * This showcases your expertise and real-world experience
+ */
 const projects = [
   {
     title: 'E-commerce Platform #1',
@@ -80,7 +86,8 @@ export default function Projects() {
     <section
       id="projects"
       ref={ref}
-      className="py-32 px-4 sm:px-6 lg:px-8 bg-dark-card/30 relative overflow-hidden"
+      className="py-20 lg:py-28 px-4 sm:px-6 lg:px-8 bg-dark-card/30 relative overflow-hidden"
+      aria-labelledby="projects-heading"
     >
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
@@ -88,7 +95,7 @@ export default function Projects() {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="mb-20"
+          className="mb-16"
         >
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8">
             <div>
@@ -100,7 +107,10 @@ export default function Projects() {
               >
                 {t('title')}
               </motion.span>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4">
+              <h2 
+                id="projects-heading"
+                className="text-4xl sm:text-5xl lg:text-6xl font-bold mt-4"
+              >
                 {(() => {
                   const subtitle = t('subtitle')
                   const words = subtitle.split(' ')
@@ -120,14 +130,14 @@ export default function Projects() {
                 })()}
               </h2>
             </div>
-            <p className="text-lg text-gray-400 max-w-md lg:text-right">
+            <p className="text-lg text-gray-300 max-w-md lg:text-right">
               {t('description')}
             </p>
           </div>
         </motion.div>
 
         {/* Masonry-like Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
           {/* First Project - Large */}
           {projects.slice(0, 1).map((project, index) => (
             <motion.div
@@ -197,11 +207,11 @@ function ProjectCard({
       </div>
 
       <div className="p-6 relative z-10">
-        <h3 className="text-2xl font-bold mb-2 group-hover:text-neon-cyan transition-colors gradient-text">
+        <h3 className="text-2xl font-bold mb-3 group-hover:text-neon-cyan transition-colors gradient-text">
           {project.title}
         </h3>
-        <p className="text-gray-300 mb-4">{project.description}</p>
-        <div className="flex flex-wrap gap-2 mb-4">
+        <p className="text-gray-300 mb-5 leading-relaxed">{project.description}</p>
+        <div className="flex flex-wrap gap-2">
           {project.technologies.map((tech) => (
             <span
               key={tech}
@@ -211,14 +221,15 @@ function ProjectCard({
             </span>
           ))}
         </div>
-        <div className="flex gap-4">
+        {/* Optimized CTAs - More prominent and clear */}
+        <div className="flex gap-3 mt-6 pt-4 border-t border-neon-purple/20">
           <motion.a
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card rounded"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white bg-dark-card/60 hover:bg-dark-card border border-neon-purple/20 hover:border-neon-cyan/50 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card"
+            whileHover={{ scale: 1.02, y: -1 }}
+            whileTap={{ scale: 0.98 }}
             aria-label={`View ${project.title} source code on GitHub`}
           >
             <Github className="w-4 h-4" aria-hidden="true" />
@@ -228,9 +239,9 @@ function ProjectCard({
             href={project.demo}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm text-gray-400 hover:text-cyan-400 transition-colors focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card rounded"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-neon-gradient/80 hover:bg-neon-gradient border border-transparent rounded-lg shadow-neon hover:shadow-neon-lg transition-all focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:ring-offset-2 focus:ring-offset-dark-card"
+            whileHover={{ scale: 1.02, y: -1 }}
+            whileTap={{ scale: 0.98 }}
             aria-label={`View ${project.title} live demo`}
           >
             <ExternalLink className="w-4 h-4" aria-hidden="true" />

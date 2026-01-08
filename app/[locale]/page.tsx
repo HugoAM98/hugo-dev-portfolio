@@ -59,25 +59,33 @@ export default function Home() {
   }>>([])
 
   useEffect(() => {
-    // Solo generar partículas en el cliente para evitar errores de hidratación
-    setParticles(
-      Array.from({ length: 20 }).map(() => ({
-        left: `${Math.random() * 100}%`,
-        animationDelay: `${Math.random() * 15}s`,
-        animationDuration: `${10 + Math.random() * 10}s`,
-      }))
-    )
+    // Reduced particle count for better performance - Only generate on client
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    
+    if (!prefersReducedMotion) {
+      setParticles(
+        Array.from({ length: 10 }).map(() => ({
+          left: `${Math.random() * 100}%`,
+          animationDelay: `${Math.random() * 20}s`,
+          animationDuration: `${15 + Math.random() * 10}s`,
+        }))
+      )
+    }
   }, [])
 
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-dark-bg via-[#0a0a12] to-dark-bg text-white relative overflow-hidden">
-      {/* Animated grid background */}
-      <div className="fixed inset-0 animated-grid opacity-20 pointer-events-none z-0" />
+    <main 
+      className="min-h-screen bg-gradient-to-b from-dark-bg via-[#0a0a12] to-dark-bg text-white relative overflow-hidden"
+      role="main"
+    >
+      {/* Optimized animated grid background - More subtle */}
+      <div className="fixed inset-0 animated-grid pointer-events-none z-0" aria-hidden="true" />
       
-      {/* Floating particles - Solo renderizar en cliente */}
+      {/* Floating particles - Only render on client, reduced count for performance */}
       {particles.length > 0 && (
-        <div className="fixed inset-0 particles z-0">
+        <div className="fixed inset-0 particles z-0" aria-hidden="true">
           {particles.map((particle, i) => (
             <div
               key={i}
