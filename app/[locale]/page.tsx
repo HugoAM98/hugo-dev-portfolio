@@ -9,6 +9,12 @@ import Skills from '@/components/Skills'
 import Contact from '@/components/Contact'
 import Navigation from '@/components/Navigation'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
+import ScrollProgress from '@/components/ScrollProgress'
+import BackToTop from '@/components/BackToTop'
+import StatsCounter from '@/components/StatsCounter'
+import KeyboardShortcuts from '@/components/KeyboardShortcuts'
+import Analytics from '@/components/Analytics'
+import SEO from '@/components/SEO'
 
 // Lazy load components for better performance
 const LazyProjects = dynamic(() => import('@/components/Projects'), {
@@ -102,8 +108,12 @@ export default function Home() {
 
       <ErrorBoundary>
         <div className="relative z-10">
+          <SEO />
+          <Analytics />
+          <ScrollProgress />
           <Navigation />
           <Hero />
+          <StatsCounter />
           <About />
           <Skills />
           <Suspense fallback={<ProjectsSkeleton />}>
@@ -112,6 +122,8 @@ export default function Home() {
           <Suspense fallback={<ContactSkeleton />}>
             <Contact />
           </Suspense>
+          <BackToTop />
+          <KeyboardShortcuts />
         </div>
       </ErrorBoundary>
     </main>

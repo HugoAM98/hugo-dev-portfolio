@@ -80,6 +80,7 @@
     "viewCode": "Code",
     "viewDemo": "Demo",
     "noProjects": "No projects found in this category",
+    "searchPlaceholder": "Search projects by name, technology or description...",
     "categories": {
       "all": "All",
       "portfolio": "Portfolio",

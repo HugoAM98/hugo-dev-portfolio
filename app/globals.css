@@ -515,4 +515,91 @@ body {
   }
 }
 
+/* Print styles - Optimized for printing portfolio */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body {
+    background: white !important;
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  /* Hide non-essential elements */
+  nav,
+  .skip-to-content,
+  button,
+  .back-to-top,
+  .keyboard-shortcuts,
+  .scroll-progress,
+  .particles,
+  .animated-grid {
+    display: none !important;
+  }
+
+  /* Optimize sections for print */
+  section {
+    page-break-inside: avoid;
+    margin-bottom: 2rem;
+  }
+
+  /* Links */
+  a {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666;
+  }
+
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    color: #000 !important;
+  }
+
+  /* Images */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Code blocks */
+  code, pre {
+    background: #f5f5f5 !important;
+    border: 1px solid #ddd;
+    page-break-inside: avoid;
+  }
+
+  /* Project cards */
+  .project-card {
+    border: 1px solid #ddd !important;
+    page-break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+
+  /* Glass effects */
+  .glass,
+  .glass-strong {
+    background: white !important;
+    border: 1px solid #ddd !important;
+  }
+
+  /* Hide decorative elements */
+  .gradient-text {
+    color: #000 !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+  }
+}
+
 
